@@ -1,0 +1,32 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: "Incluindo usuarios e senhas do vcenter"
+    include_vars: /etc/ansible/group_vars/vcenter.yml
+  - name: "Criando vm"
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      name: teste-ansible
+      template: terraform-ubuntu18.04
+      datacenter: "{{ datacenter_name }}"
+      folder: /{{ datacenter_name }}/vm
+      cluster: "{{ cluster_name }}"
+      datastore: "netapp_vmware_sata"
+      networks:
+      - name: vlan90
+        ip: 10.90.0.211
+        netmask: 255.255.255.0
+        gateway: 10.90.0.1
+        type: static
+        dns_servers: 200.11.0.2
+      customization:
+        hostname: "teste-ansible"
+        dns_servers:
+        - 200.11.0.2
+        - 200.11.0.52
+      state: poweredon
+      wait_for_ip_address: yes
+    delegate_to: localhost
