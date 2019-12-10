@@ -3,6 +3,10 @@
 Criação de vms no vCenter com infra como código usando o ansible.
 
 # Pré requisitos
+Matrix de compatibilidade dos sistemas operacionais das vms
+http://partnerweb.vmware.com/programs/guestOS/guest-os-customization-matrix.pdf
+
+Exemplo que estou usando é o ubuntu-18.04
 
 Instalar o ansible
 
