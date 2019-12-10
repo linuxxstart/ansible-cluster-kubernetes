@@ -2,7 +2,7 @@
   gather_facts: no
   tasks:
   - name: "Incluindo usuarios e senhas do vcenter"
-    include_vars: /etc/ansible/group_vars/vcenter.yml
+    include_vars: /etc/ansible/group_vars/vcenter-vars.yml
   - name: "Criando vm"
     vmware_guest:
       hostname: "{{ vcenter_server }}"
