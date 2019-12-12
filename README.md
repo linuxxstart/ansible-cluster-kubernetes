@@ -37,5 +37,5 @@ sudo vim /etc/ansible/playbooks/vcenter-vm.yml
 
 # 3 Executar  o playbook
 ```
-sudo ansible-playbook -i vms_deploy vcenter-vm.yml --ask-vault-pass -K
+sudo ansible-playbook -i vms_deploy vcenter-task.yml --ask-vault-pass -K
 ```
