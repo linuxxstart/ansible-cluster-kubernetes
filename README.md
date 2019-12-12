@@ -18,16 +18,18 @@ Instalar o pip do python para instalar a API de conexão com o vCenter.
 sudo apt install python-pip
 sudo pip install pyvmomi
 ```
-# 1 Criar o arquivo com usuário e senha
+# 1 Edita o arquivo com usuário e senha
+
+Depois de clonar o repositório, edite o arquivo.
 ```
-sudo vim /etc/ansible/group_vars/vcenter-vars.yml
+sudo vim vcenter-vars.yml
 ```
 Encripitar essas informções. Vai pedir para definir uma senha, pode ser qualquer uma, ela será pedida na exeção do playbook.
 ```
-sudo ansible-vault encrypt /etc/ansible/group_vars/vcenter-vars.yml
+sudo ansible-vault encrypt vcenter-vars.yml
 ```
 
-# 2 Criar o playbook que será executado
+# 2 Edite infos que precisar no playbook
 
 ```
 sudo vim /etc/ansible/playbooks/vcenter-vm.yml
@@ -35,5 +37,5 @@ sudo vim /etc/ansible/playbooks/vcenter-vm.yml
 
 # 3 Executar  o playbook
 ```
-sudo ansible-playbook /etc/ansible/playbooks/vcenter-vm.yml --ask-vault-pass -K
+sudo ansible-playbook -i vms_deploy vcenter-vm.yml --ask-vault-pass -K
 ```

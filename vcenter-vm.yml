@@ -1,8 +1,8 @@
-- hosts: localhost
-  gather_facts: no
+- hosts: all
+  gather_facts: False
   tasks:
   - name: "Incluindo usuarios e senhas do vcenter"
-    include_vars: /etc/ansible/group_vars/vcenter-vars.yml
+    include_vars: vcenter-vars.yml
   - name: "Criando vm"
     vmware_guest:
       hostname: "{{ vcenter_server }}"
@@ -14,7 +14,7 @@
       datacenter: "{{ datacenter_name }}"
       folder: /{{ datacenter_name }}/vm
       cluster: "{{ cluster_name }}"
-      datastore: "netapp_vmware_sata"
+      datastore: "{{ inventory_hostname }}"
       hardware:
         memory_mb: 4096
         num_cpus: 6
@@ -23,7 +23,7 @@
         hotadd_memory: True
       networks:
       - name: vlan90
-        ip: 10.90.0.211
+        ip: "{{ guest_custom_ip }}"
         netmask: 255.255.255.0
         gateway: 10.90.0.1
         type: static
@@ -31,9 +31,7 @@
           - 200.11.0.2
           - 200.11.0.52
         dns_suffix:
-          - ufrrj.br 
-      customization:
-        hostname: "teste-ansible"
+          - ufrrj.br
       state: poweredon
       wait_for_ip_address: yes
     delegate_to: localhost
