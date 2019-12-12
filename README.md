@@ -32,7 +32,7 @@ sudo ansible-vault encrypt vcenter-vars.yml
 # 2 Edite infos que precisar no playbook
 
 ```
-sudo vim /etc/ansible/playbooks/vcenter-vm.yml
+sudo vim /etc/ansible/playbooks/vcenter-task.yml
 ```
 
 # 3 Executar  o playbook
