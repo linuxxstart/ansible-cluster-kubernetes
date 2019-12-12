@@ -32,6 +32,13 @@
           - 200.11.0.52
         dns_suffix:
           - ufrrj.br
+      customization:
+        domain: ufrrj.br
+        dns_servers:
+          - 200.11.0.2
+          - 200.11.0.52
+        dns_suffix:
+          - ufrrj.br  
       state: poweredon
       wait_for_ip_address: yes
     delegate_to: localhost
