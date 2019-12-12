@@ -9,12 +9,12 @@
       username: "{{ vcenter_user }}"
       password: "{{ vcenter_pass }}"
       validate_certs: False
-      name: teste-ansible
+      name: "{{ inventory_hostname }}"
       template: template-ubuntu18.04
       datacenter: "{{ datacenter_name }}"
       folder: /{{ datacenter_name }}/vm
       cluster: "{{ cluster_name }}"
-      datastore: "{{ inventory_hostname }}"
+      datastore: "{{ vsphere_datastore }}"
       hardware:
         memory_mb: 4096
         num_cpus: 6
