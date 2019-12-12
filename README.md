@@ -20,7 +20,7 @@ sudo pip install pyvmomi
 ```
 # 1 Edita o arquivo com usuário e senha
 
-Depois de clonar o repositório, edite o arquivo.
+Depois de clonar o repositório edite o arquivo.
 ```
 sudo vim vcenter-vars.yml
 ```
