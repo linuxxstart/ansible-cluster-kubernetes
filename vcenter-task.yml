@@ -43,7 +43,23 @@
       wait_for_ip_address: yes
     delegate_to: localhost
 
-    #  - name: "Executando comando na vm"
+  - name: "Executando comando na vm"
+    vmware_vm_shell:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      datacenter: "{{ datacenter_name }}"
+      folder: "/{{datacenter_name}}/vm"
+      vm_id: "{{ inventory_hostname }}"
+      vm_username: "{{ user_vm }}"
+      vm_password: "{{ user_pass }}"
+      vm_shell: "/usr/bin/hostnamectl"
+      vm_shell_args: "set-hostname {{ inventory_hostname }} > /tmp/$$.txt 2>&1"
+    delegate_to: localhost
+
+
+  #  - name: "Instalando docker"
 #    vmware_vm_shell:
 #      hostname: "{{ vcenter_server }}"
 #      username: "{{ vcenter_user }}"
@@ -51,9 +67,42 @@
 #      validate_certs: False
 #      datacenter: "{{ datacenter_name }}"
 #      folder: "/{{datacenter_name}}/vm"
-#      vm_id: "{{item.value.vmhost}}"
+#      vm_id: "{{ inventory_hostname }}"
 #      vm_username: "{{ user_vm }}"
 #      vm_password: "{{ user_pass }}"
-#      vm_shell: "/usr/bin/hostnamectl"
-#      vm_shell_args: "set-hostname teste-ansible1 > /tmp/$$.txt 2>&1"
+#      vm_shell: "/usr/bin/curl"
+#      vm_shell_args: "-fsSL https://get.docker.com | sh > /tmp/$$.txt 2>&1"
 #    delegate_to: localhost
+
+- name: "Verificando se o swarm está ativo"
+vmware_vm_shell:
+  hostname: "{{ vcenter_server }}"
+  username: "{{ vcenter_user }}"
+  password: "{{ vcenter_pass }}"
+  validate_certs: False
+  datacenter: "{{ datacenter_name }}"
+  folder: "/{{datacenter_name}}/vm"
+  vm_id: "{{ inventory_hostname }}"
+  vm_username: "{{ user_vm }}"
+  vm_password: "{{ user_pass }}"
+  vm_shell: "/usr/bin/docker"
+  vm_shell_args: "info > /tmp/$$.txt 2>&1"
+delegate_to: localhost
+register: docker_info
+
+- name: "Inciando cluster swarm"
+    vmware_vm_shell:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      datacenter: "{{ datacenter_name }}"
+      folder: "/{{datacenter_name}}/vm"
+      vm_id: "{{ inventory_hostname }}"
+      vm_username: "{{ user_vm }}"
+      vm_password: "{{ user_pass }}"
+      vm_shell: "/usr/bin/docker"
+      vm_shell_args: "swarm init --advertise-addr {{ swarm_manager_ip }}:{{ swarm_manager_porta }} > /tmp/$$.txt 2>&1"
+      when: "docker_info.stdout.find('Swarm: active') == -1 and inventory_hostname == groups['docker_swarm_manager'][0]"
+    delegate_to: localhost
+

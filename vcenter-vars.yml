@@ -3,3 +3,5 @@ datacenter_name: "UFRRJ"
 cluster_name: "UFRRJ_HA"
 vcenter_user: "freitas@ufrrj.br"
 vcenter_pass: senha
+user_vm: root
+user_pass: senha
