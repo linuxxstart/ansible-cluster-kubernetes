@@ -42,3 +42,18 @@
       state: poweredon
       wait_for_ip_address: yes
     delegate_to: localhost
+
+    #  - name: "Executando comando na vm"
+#    vmware_vm_shell:
+#      hostname: "{{ vcenter_server }}"
+#      username: "{{ vcenter_user }}"
+#      password: "{{ vcenter_pass }}"
+#      validate_certs: False
+#      datacenter: "{{ datacenter_name }}"
+#      folder: "/{{datacenter_name}}/vm"
+#      vm_id: "{{item.value.vmhost}}"
+#      vm_username: "{{ user_vm }}"
+#      vm_password: "{{ user_pass }}"
+#      vm_shell: "/usr/bin/hostnamectl"
+#      vm_shell_args: "set-hostname teste-ansible1 > /tmp/$$.txt 2>&1"
+#    delegate_to: localhost
