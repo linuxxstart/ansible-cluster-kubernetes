@@ -3,94 +3,80 @@
   tasks:
   - name: "Incluindo usuarios e senhas do vcenter"
     include_vars: vcenter-vars.yml
-  - name: "Criando vm"
-    vmware_guest:
-      hostname: "{{ vcenter_server }}"
-      username: "{{ vcenter_user }}"
-      password: "{{ vcenter_pass }}"
-      validate_certs: False
-      name: "{{ inventory_hostname }}"
-      template: template-ubuntu18.04
-      datacenter: "{{ datacenter_name }}"
-      folder: /{{ datacenter_name }}/vm
-      cluster: "{{ cluster_name }}"
-      datastore: "{{ vsphere_datastore }}"
-      hardware:
-        memory_mb: 4096
-        num_cpus: 6
-        num_cpu_cores_per_socket: 3
-        hotadd_cpu: True
-        hotadd_memory: True
-      networks:
-      - name: vlan90
-        ip: "{{ guest_custom_ip }}"
-        netmask: 255.255.255.0
-        gateway: 10.90.0.1
-        type: static
-        dns_servers: 
-          - 200.11.0.2
-          - 200.11.0.52
-        dns_suffix:
-          - ufrrj.br
-      customization:
-        domain: ufrrj.br
-        dns_servers:
-          - 200.11.0.2
-          - 200.11.0.52
-        dns_suffix:
-          - ufrrj.br  
-      state: poweredon
-      wait_for_ip_address: yes
-    delegate_to: localhost
+  - name: "Incluindo usuasio da vm"
+    include_vars: vm_swarm
+  #- name: "Criando vm"
+  #  vmware_guest:
+  #    hostname: "{{ vcenter_server }}"
+  #    username: "{{ vcenter_user }}"
+  #    password: "{{ vcenter_pass }}"
+  #    validate_certs: False
+  #    name: "{{ inventory_hostname }}"
+  #    template: template-ubuntu18.04
+  #    datacenter: "{{ datacenter_name }}"
+  #    folder: /{{ datacenter_name }}/vm
+  #    cluster: "{{ cluster_name }}"
+  #    datastore: "{{ vsphere_datastore }}"
+  #    hardware:
+  #      memory_mb: 4096
+  #      num_cpus: 6
+  #      num_cpu_cores_per_socket: 3
+  #      hotadd_cpu: True
+  #      hotadd_memory: True
+  #    networks:
+  #    - name: vlan90
+  #      ip: "{{ guest_custom_ip }}"
+  #      netmask: 255.255.255.0
+  #      gateway: 10.90.0.1
+  #      type: static
+  #      dns_servers: 
+  #        - 200.11.0.2
+  #        - 200.11.0.52
+  #      dns_suffix:
+  #        - ufrrj.br
+  #    customization:
+  #      domain: ufrrj.br
+  #      dns_servers:
+  #        - 200.11.0.2
+  #        - 200.11.0.52
+  #      dns_suffix:
+  #        - ufrrj.br  
+  #    state: poweredon
+  #    wait_for_ip_address: yes
+  #  delegate_to: localhost
 
-  - name: "Executando comando na vm"
-    vmware_vm_shell:
-      hostname: "{{ vcenter_server }}"
-      username: "{{ vcenter_user }}"
-      password: "{{ vcenter_pass }}"
-      validate_certs: False
-      datacenter: "{{ datacenter_name }}"
-      folder: "/{{datacenter_name}}/vm"
-      vm_id: "{{ inventory_hostname }}"
-      vm_username: "{{ user_vm }}"
-      vm_password: "{{ user_pass }}"
-      vm_shell: "/usr/bin/hostnamectl"
-      vm_shell_args: "set-hostname {{ inventory_hostname }} > /tmp/$$.txt 2>&1"
-    delegate_to: localhost
+  #- name: "Executando comando na vm"
+  #  vmware_vm_shell:
+  #    hostname: "{{ vcenter_server }}"
+  #    username: "{{ vcenter_user }}"
+  #    password: "{{ vcenter_pass }}"
+  #    validate_certs: False
+  #    datacenter: "{{ datacenter_name }}"
+  #    folder: "/{{datacenter_name}}/vm"
+  #    vm_id: "{{ inventory_hostname }}"
+  #    vm_username: "{{ user_vm }}"
+  #    vm_password: "{{ user_pass }}"
+  #    vm_shell: "/usr/bin/hostnamectl"
+  #    vm_shell_args: "set-hostname {{ inventory_hostname }} > /tmp/$$.txt 2>&1"
+  #  delegate_to: localhost
 
 
-  #  - name: "Instalando docker"
-#    vmware_vm_shell:
-#      hostname: "{{ vcenter_server }}"
-#      username: "{{ vcenter_user }}"
-#      password: "{{ vcenter_pass }}"
-#      validate_certs: False
-#      datacenter: "{{ datacenter_name }}"
-#      folder: "/{{datacenter_name}}/vm"
-#      vm_id: "{{ inventory_hostname }}"
-#      vm_username: "{{ user_vm }}"
-#      vm_password: "{{ user_pass }}"
-#      vm_shell: "/usr/bin/curl"
-#      vm_shell_args: "-fsSL https://get.docker.com | sh > /tmp/$$.txt 2>&1"
-#    delegate_to: localhost
-
-- name: "Verificando se o swarm está ativo"
-vmware_vm_shell:
-  hostname: "{{ vcenter_server }}"
-  username: "{{ vcenter_user }}"
-  password: "{{ vcenter_pass }}"
-  validate_certs: False
-  datacenter: "{{ datacenter_name }}"
-  folder: "/{{datacenter_name}}/vm"
-  vm_id: "{{ inventory_hostname }}"
-  vm_username: "{{ user_vm }}"
-  vm_password: "{{ user_pass }}"
-  vm_shell: "/usr/bin/docker"
-  vm_shell_args: "info > /tmp/$$.txt 2>&1"
-delegate_to: localhost
-register: docker_info
-
-- name: "Inciando cluster swarm"
+  #- name: "Instalando docker"
+  #  vmware_vm_shell:
+  #    hostname: "{{ vcenter_server }}"
+  #    username: "{{ vcenter_user }}"
+  #    password: "{{ vcenter_pass }}"
+  #    validate_certs: False
+  #    datacenter: "{{ datacenter_name }}"
+  #    folder: "/{{datacenter_name}}/vm"
+  #    vm_id: "{{ inventory_hostname }}"
+  #    vm_username: "{{ user_vm }}"
+  #    vm_password: "{{ user_pass }}"
+  #    vm_shell: "/usr/bin/curl"
+  #    vm_shell_args: "-fsSL https://get.docker.com | sh > /tmp/$$.txt 2>&1"
+  #  delegate_to: localhost
+  
+  - name: "Verificando se o swarm está ativo"
     vmware_vm_shell:
       hostname: "{{ vcenter_server }}"
       username: "{{ vcenter_user }}"
@@ -102,7 +88,22 @@ register: docker_info
       vm_username: "{{ user_vm }}"
       vm_password: "{{ user_pass }}"
       vm_shell: "/usr/bin/docker"
-      vm_shell_args: "swarm init --advertise-addr {{ swarm_manager_ip }}:{{ swarm_manager_porta }} > /tmp/$$.txt 2>&1"
-      when: "docker_info.stdout.find('Swarm: active') == -1 and inventory_hostname == groups['docker_swarm_manager'][0]"
+      vm_shell_args: "info"
     delegate_to: localhost
+    register: docker_info
 
+  - name: "Inciando cluster swarm"
+    vmware_vm_shell:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      datacenter: "{{ datacenter_name }}"
+      folder: "/{{datacenter_name}}/vm"
+      vm_id: "{{ inventory_hostname }}"
+      vm_username: "{{ user_vm }}"
+      vm_password: "{{ user_pass }}"
+      vm_shell: "/usr/bin/docker"
+      vm_shell_args: "swarm init --advertise-addr {{ swarm_manager_ip }}:{{ swarm_manager_porta }}"
+    when: "docker_info.stdout.find('Swarm: active') == -1 and inventory_hostname == groups['swarm_manager'][0]"
+    delegate_to: localhost
