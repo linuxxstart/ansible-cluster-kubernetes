@@ -1,3 +1,5 @@
-[ansibleubuntu]
+[docker_swarm_manager]
 ansible-ubuntu01 guest_custom_ip='10.90.0.211' vsphere_datastore='netapp_vmware_sata'
 ansible-ubuntu02 guest_custom_ip='10.90.0.212' vsphere_datastore='netapp_vmware_sata'
+[docker_swarm_worker]
+ansible-ubuntu03 guest_custom_ip='10.90.0.213' vsphere_datastore='netapp_vmware_sata'
