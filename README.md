@@ -1,4 +1,4 @@
-# ansible-vmware
+# ansible-cluster-kubernetes
 
 Criação de vms no vCenter com infra como código usando o ansible.
 
@@ -35,7 +35,7 @@ $ ansible-vault encrypt group_vars/all
 $ vim vms_deploy
 $ vim main.yml
 $ vim roles/vms/tasks/main.yml
-$ vim roles/manager/tasks/main.yml
+$ vim roles/master/tasks/main.yml
 $ vim roles/worker/tasks/main.yml
 ```
 

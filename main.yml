@@ -5,12 +5,12 @@
     roles:
       - vms
  
-  - name: Configurando Managers
-    hosts: docker_swarm_manager
+  - name: Configurando Master
+    hosts: kubernetes_master
     roles:
-      - manager
+      - master
 
   - name: Configurando Workers
-    hosts: docker_swarm_manager:docker_swarm_worker
+    hosts: kubernetes_master:kubernetes_worker
     roles:
       - worker
