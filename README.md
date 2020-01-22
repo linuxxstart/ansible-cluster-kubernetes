@@ -43,3 +43,9 @@ $ vim roles/worker/tasks/main.yml
 ```
 $ ansible-playbook -i vms_deploy main.yml --ask-vault-pass -K
 ```
+
+# Fontes
+
+https://github.com/learnitguide/kubernetes-and-ansible
+https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/
+
