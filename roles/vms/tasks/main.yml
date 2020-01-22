@@ -23,15 +23,15 @@
         gateway: 10.90.0.1
         type: static
         dns_servers: 
-          - 200.11.0.2
-          - 200.11.0.52
+          - 10.90.0.1
+          - 10.90.0.2
         dns_suffix:
           - local.br
       customization:
         domain: local.br
         dns_servers:
-          - 200.11.0.2
-          - 200.11.0.52
+          - 10.90.0.1
+          - 10.90.0.2
         dns_suffix:
           - local.br
       state: poweredon
