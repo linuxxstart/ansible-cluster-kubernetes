@@ -26,14 +26,14 @@
           - 200.11.0.2
           - 200.11.0.52
         dns_suffix:
-          - ufrrj.br
+          - local.br
       customization:
-        domain: ufrrj.br
+        domain: local.br
         dns_servers:
           - 200.11.0.2
           - 200.11.0.52
         dns_suffix:
-          - ufrrj.br
+          - local.br
       state: poweredon
       wait_for_ip_address: yes
     delegate_to: localhost

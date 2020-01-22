@@ -1,17 +1,21 @@
-  - name: Pulling images required for setting up a Kubernetes cluster
+  - name: Baixando imagens para configurar o cluster
     shell: kubeadm config images pull
 
-  - name: Initializing Kubernetes cluster
+  - name: Iniciando Kubernetes cluster
     shell: kubeadm init --apiserver-advertise-address {{ad_addr}}
-    register: output
 
-  - name: Storing Logs and Generated token for future purpose.
+  - name: Gerando o token 
+    command: kubeadm token create --print-join-command
+    register: output
+  
+  - name: Copiando o token
     local_action: copy content={{ output.stdout }} dest={{ token_file }}
 
-  - name: Copying required files
+  - name: Copiando arquivos necessários
     shell: |
      mkdir -p $HOME/.kube
      sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
      sudo chown $(id -u):$(id -g) $HOME/.kube/config
-  - name: Install Network Add-on
-    command: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
+  - name: Instalando network add-on weave
+    shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"

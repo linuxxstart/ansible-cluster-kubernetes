@@ -8,6 +8,5 @@ ansible_vmware_validate_certs: no
 ansible_vmware_guest_path: local/vm/Infracode/{{ inventory_hostname }}
 ansible_vmware_tools_user: root
 ansible_vmware_tools_password: VMware123!
-docker_swarm_manager_ip: "10.90.0.211"
-docker_swarm_manager_port: "2377"
 ad_addr: "10.90.0.211"
+token_file: join_token

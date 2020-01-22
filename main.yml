@@ -11,6 +11,6 @@
       - master
 
   - name: Configurando Workers
-    hosts: kubernetes_master:kubernetes_worker
+    hosts: kubernetes_worker
     roles:
       - worker
